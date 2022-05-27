@@ -1,0 +1,64 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="{% static 'todo/css/styles.css'%}">
+        <meta charset="utf-8">
+    </head>
+    
+    <body>
+        <div id="myDIV" class="header">
+                <p>To do List by {{user|title}}
+                        <a href="{% url 'create'%}" style="color: white;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" style="margin-left: 5%;" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
+                          </svg>
+                        </a>
+             
+                </p> 
+
+                <form action="/logout/" method="POST">
+                {% csrf_token %}
+                <input id="logout" type="submit" value="Log out" >
+                </form>
+
+                <form action="/" method="GET">
+                    <input id="searcher" type="text" name="searcher" value="{{searcher}}" id="myInput" placeholder="Title...">
+                    <input id="submit" type="submit" value="Search">
+                </form>      
+          </div>
+            
+            <div id="tasksP">
+                <ul id="myUL">
+                        {% for task in tasks %}
+
+                            {% if task.completed %}
+                                <li style="background: #ff0202; border: solid rgb(238, 255, 0);  margin-bottom: 1%;">
+                                    {{task.title}}
+                                    <span style="background: #7e0000;">{{task.desc}}</span>
+                                    <a href="{% url 'update' task.id %}"><button style="padding-right: 1%;">Edit task</button></a>
+                                    <a href="{% url 'delete' task.id %}"><button>Delete</button></a>
+                                    {{task.pub_date}}
+                                    <span style="float: right;" class="reminder"><strong>Cheers you have finished </strong</span>
+                                                                     
+                                </li> 
+                            {% else%}
+                                <li style="border: solid green; margin-bottom: 1%;">
+                                    {{task.title}}
+                                    <span id="desc" style="background: #92e981;">{{task.desc}}</span>
+                                    
+                                    <a href="{% url 'update' task.id %}"><button style="padding-right: 1%;">Edit task</button></a>
+                                    <a href="{% url 'delete' task.id %}"><button>Delete</button></a>
+                                    <span id="pub_date">{{task.pub_date}}</span>
+                                    <span style="float: right;" class="reminder"><strong>You must do it</strong</span>
+                                     
+                                </li> 
+                            {% endif %} 
+                        {% endfor%} 
+                        
+                </ul> 
+            </div>
+          
+    </body>
+
+</html>

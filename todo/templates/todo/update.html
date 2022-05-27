@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="{% static 'todo/css/styles.css'%}">
+        <meta charset="utf-8">
+    </head>
+    <body>
+        <form action="/" method="POST"> 
+            {% csrf_token %}  
+            <p>{{form.as_p}}</p>
+            <input type="submit" name="update">
+
+        </form>
+    </body>
+</html>
